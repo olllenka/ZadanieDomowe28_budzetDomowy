@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="m-5">
+    <h1 th:text="${mode == 'edit' ? 'Edycja transakcji' : 'Dodawanie nowej transakcji'}"></h1>
+    <form method="post" th:action = "${mode == 'edit' ? '/edit' : '/'}" th:object="${transaction}">
+        <div class="form-group">
+            <label for="transactionType">Typ transakcji</label>
+            <select required id="transactionType" class="form-control" th:field="*{type}">
+                <option selected value="">Wybierz...</option>
+                <option th:value="INCOME">Przychód</option>
+                <option th:value="EXPENSE">Wydatek</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="transactionDescription">Opis</label>
+            <input type="text" class="form-control" id="transactionDescription" th:field="*{description}">
+        </div>
+        <div class="form-group">
+            <label for="transactionAmount">Wartość</label>
+            <input required type="number" step="0.01" class="form-control" id="transactionAmount" th:field="*{amount}">
+        </div>
+        <div class="form-group">
+            <label for="transactionDate">Data</label>
+            <input type="date" class="form-control" id="transactionDate" th:field="*{date}">
+        </div>
+        <div th:if="${mode == 'edit'}" class="form-group">
+            <label for="transactionId">ID</label>
+            <input readonly type="number" class="form-control" id="transactionId" th:field="*{id}">
+        </div>
+        <button type="submit" class="btn btn-primary" th:text="${mode == 'edit' ? 'Edytuj' : 'Dodaj'}"></button>
+    </form>
+</div>
+</body>
+</html>
